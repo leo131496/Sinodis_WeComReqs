@@ -220,6 +220,53 @@
     .toast strong, .toast span { display: block; }
     .toast span { color: var(--sub); font-size: 12px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .flow-page { max-width: 920px; margin: 0 auto; padding: 26px 20px 38px; }
+    .flow-page > header { margin-bottom: 14px; }
+    .flow-page > header p { margin-top: 6px; color: var(--sub); font-size: 13px; }
+    .flow-board { --flow-line: #8fa2ba; margin: 0; padding: 20px clamp(12px, 3vw, 25px) 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; }
+    .flow-steps { display: grid; gap: 15px; margin: 0; padding: 0; list-style: none; }
+    .flow-trunk { max-width: 430px; margin: 0 auto; }
+    .flow-step { position: relative; display: grid; align-content: center; gap: 4px; min-height: 49px; padding: 9px 11px; border: 1px solid #dbe5f2; border-radius: 7px; background: #f8faff; line-height: 1.4; }
+    .flow-step + .flow-step::before, .flow-question::before {
+      content: "";
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      width: 1px;
+      height: 14px;
+      background: var(--flow-line);
+    }
+    .flow-step + .flow-step::after, .flow-question::after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: calc(50% - 2.5px);
+      width: 6px;
+      height: 6px;
+      transform: rotate(45deg);
+      border-right: 1px solid var(--flow-line);
+      border-bottom: 1px solid var(--flow-line);
+    }
+    .flow-step strong { color: var(--ink); font-size: 13px; }
+    .flow-step small { color: var(--sub); font-size: 11px; }
+    .flow-system { color: #315f9f; font-size: 11px; font-weight: 700; }
+    .flow-trunk .flow-step { grid-template-columns: 50px minmax(0, 1fr); align-items: center; }
+    .flow-question { position: relative; width: fit-content; max-width: 100%; margin: 15px auto 0; padding: 9px 14px; border: 1px solid #e7c992; border-radius: 7px; background: #fff7e8; color: #75470d; font-size: 13px; font-weight: 700; text-align: center; }
+    .flow-branches { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; padding-top: 19px; }
+    .flow-branches::before { content: ""; position: absolute; top: 0; left: 50%; width: 1px; height: 9px; background: var(--flow-line); }
+    .flow-branches::after { content: ""; position: absolute; top: 9px; left: calc(25% - 5.5px); right: calc(25% - 5.5px); height: 10px; border: 1px solid var(--flow-line); border-bottom: 0; pointer-events: none; }
+    .flow-branch { min-width: 0; padding: 10px; border: 1px solid #dbe8ef; border-radius: 9px; background: #f5fafc; }
+    .flow-branch.missing { border-color: #ede2ce; background: #fdf9f2; }
+    .flow-branch h2 { margin-bottom: 8px; color: #126c4a; font-size: 13px; }
+    .flow-branch.missing h2 { color: #7a4c14; }
+    .flow-branch .flow-step { background: #fff; }
+    .flow-branch .flow-end { border-color: #aed3c1; background: #eaf7f0; }
+    .flow-branch.missing .flow-end { border-color: #e4d3b3; background: #fff5e4; }
+    .flow-key { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: center; margin-top: 2px; }
+    .flow-key span { min-width: 0; padding: 5px 6px; border-radius: 5px; background: #edf3fb; color: var(--sub); font-size: 11px; text-align: center; overflow-wrap: anywhere; }
+    .flow-key b { color: #315f9f; }
+    .flow-key code { display: block; color: var(--ink); font-family: ui-monospace, monospace; }
+    .flow-board figcaption { margin-top: 11px; color: var(--muted); font-size: 11px; }
     @media (max-width: 1090px) {
       .admin-shell { grid-template-columns: 158px minmax(0, 1fr); }
     }
@@ -235,6 +282,15 @@
       .table-panel .section-top { flex-wrap: wrap; }
       .relation-tools { width: 100%; }
       .relation-tools .searchbox { max-width: none; }
+      .flow-page { padding: 18px 12px 24px; }
+      .flow-branches { grid-template-columns: minmax(0, 1fr); gap: 10px; padding-top: 12px; }
+      .flow-branches::before, .flow-branches::after { display: none; }
+    }
+    @media (max-width: 425px) {
+      .demo-bar { grid-template-columns: minmax(0, 1fr) auto; padding-inline: 8px; gap: 5px; }
+      .demo-switch a { padding-inline: 7px; }
+      .demo-switch .icon, .demo-reset .icon { display: none; }
+      .demo-reset { padding-inline: 4px; }
     }
     @media (max-width: 520px) {
       .wecom-content { padding-inline: 12px; }
@@ -254,6 +310,7 @@
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.7" cy="10.7" r="6.2"/><path d="m15.3 15.3 4.4 4.4"/></symbol>
     <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1.8c0-2.6 3.1-4.2 7-4.2s7 1.6 7 4.2V20"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4m-6 4v-4h12v4"/></symbol>
     <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"/></symbol>
     <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 11a8 8 0 1 1 1.7 5M4 5v6h6"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
@@ -265,6 +322,7 @@
     <nav class="demo-switch" aria-label="切换演示页面">
       <a href="#wecom" id="nav-company" aria-current="page"><svg class="icon small" aria-hidden="true"><use href="#i-chat"/></svg>企业微信端</a>
       <a href="#admin" id="nav-relation"><svg class="icon small" aria-hidden="true"><use href="#i-grid"/></svg>营销后台</a>
+      <a href="#flow" id="nav-flow"><svg class="icon small" aria-hidden="true"><use href="#i-flow"/></svg>数据流转图</a>
     </nav>
     <button class="demo-reset" type="button" id="reset-demo"><svg class="icon small" aria-hidden="true"><use href="#i-reset"/></svg>重置演示</button>
   </header>
@@ -344,6 +402,46 @@
           <div class="table-foot" id="relation-page-count"></div>
         </section>
       </div>
+    </section>
+    <section id="flow-view" class="flow-page" aria-labelledby="flow-heading" hidden>
+      <header>
+        <h1 id="flow-heading">数据流转图</h1>
+        <p>公司用户查询、线索关联与缺失用户建档</p>
+      </header>
+      <figure class="flow-board" aria-label="SF、企微、外部数据源、线索与 EC 的数据流转">
+        <ol class="flow-steps flow-trunk" aria-label="同步与查询">
+          <li class="flow-step"><span class="flow-system">SF</span><strong>拉取公司及用户数据</strong></li>
+          <li class="flow-step"><span class="flow-system">企微</span><strong>同步至企微公司查询的数据源</strong></li>
+          <li class="flow-step"><span class="flow-system">销售</span><strong>在企微公司查询页点击「查询」</strong></li>
+        </ol>
+        <p class="flow-question">该公司下有用户数据吗？</p>
+        <div class="flow-branches">
+          <section class="flow-branch" aria-labelledby="flow-has-users">
+            <h2 id="flow-has-users">有用户</h2>
+            <ol class="flow-steps">
+              <li class="flow-step"><strong>选择用户，点击「关联关系」</strong><small>销售在企微查询结果中操作</small></li>
+              <li class="flow-step"><strong>同步用户数据至「对应关系」</strong><small>营销后台 → 市场线索 → 外部数据源 → 对应关系</small></li>
+              <li class="flow-step">
+                <strong>按 customerid 匹配线索</strong>
+                <div class="flow-key">
+                  <span>对应关系<code>customerid</code></span>
+                  <b aria-label="等于">=</b>
+                  <span>线索<code>customerid</code></span>
+                </div>
+              </li>
+              <li class="flow-step flow-end"><strong>匹配成功后绑定外部数据源记录与线索</strong></li>
+            </ol>
+          </section>
+          <section class="flow-branch missing" aria-labelledby="flow-no-users">
+            <h2 id="flow-no-users">无用户</h2>
+            <ol class="flow-steps">
+              <li class="flow-step"><span class="flow-system">SF</span><strong>销售在该公司下创建用户数据</strong></li>
+              <li class="flow-step flow-end"><span class="flow-system">EC</span><strong>接收从 SF 同步的新用户数据</strong></li>
+            </ol>
+          </section>
+        </div>
+        <figcaption>Demo 使用模拟数据展示该业务流程。</figcaption>
+      </figure>
     </section>
   </main>
   <dialog id="action-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-content">
@@ -631,7 +729,7 @@
 
     function showView(view) {
       activeView = view;
-      for (const name of ["company", "relation"]) {
+      for (const name of ["company", "relation", "flow"]) {
         const active = name === view;
         $(`#${name}-view`).hidden = !active;
         const nav = $(`#nav-${name}`);
@@ -639,14 +737,15 @@
         else nav.removeAttribute("aria-current");
       }
       if (view === "relation") renderRelations();
-      else renderCompany();
+      else if (view === "company") renderCompany();
       clearTimeout(toastTimer);
       $("#toast").hidden = true;
       window.scrollTo(0, 0);
     }
 
     function showViewFromHash() {
-      showView(window.location.hash === "#admin" ? "relation" : "company");
+      const routes = { "#wecom": "company", "#admin": "relation", "#flow": "flow" };
+      showView(routes[window.location.hash] ?? "company");
     }
 
     function openWecomPage(page, focusSearch = false) {
@@ -830,7 +929,7 @@
       if (event.key !== storageKey) return;
       data = readData();
       if (activeView === "relation") renderRelations();
-      else renderCompany();
+      else if (activeView === "company") renderCompany();
     });
     showViewFromHash();
   </script>
