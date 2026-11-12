@@ -46,8 +46,8 @@
       display: grid;
       grid-template-columns: clamp(54px, 14vw, 64px) minmax(0, 1fr);
       grid-template-rows: auto minmax(0, 1fr);
-      width: min(calc(100% - 32px), 524px);
-      height: min(780px, calc(100dvh - 99px));
+      width: min(100%, 393px);
+      height: min(852px, calc(100dvh - 99px));
       min-height: 360px;
       margin: 20px auto;
       overflow: hidden;
@@ -92,9 +92,6 @@
     .rail-item[aria-current="page"] { color: var(--wecom-blue-pressed); font-weight: 700; background: #edf5ff; }
     .rail-app-icon { display: grid; place-items: center; }
     .wecom-content { padding: 19px 16px 16px; }
-    .wecom-path { display: flex; align-items: center; gap: 4px; color: var(--muted); font-size: 11px; margin-bottom: 8px; }
-    .wecom-path .icon { width: 12px; height: 12px; }
-    .wecom-path strong { font-weight: 650; color: var(--sub); }
     .panel-heading { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
     .panel-icon { display: grid; place-items: center; flex: none; width: 35px; height: 35px; border-radius: 9px; background: #e6f1ff; color: var(--wecom-blue-pressed); }
     .panel-heading h1 { font-size: 23px; line-height: 1.2; }
@@ -240,8 +237,13 @@
       .relation-tools .searchbox { max-width: none; }
     }
     @media (max-width: 520px) {
-      .wecom-window { width: 100%; height: calc(100dvh - 59px); min-height: 0; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
       .wecom-content { padding-inline: 12px; }
+    }
+    @media (max-width: 425px) {
+      .wecom-window { height: min(852px, calc(100dvh - 59px)); min-height: 0; margin: 0 auto; }
+    }
+    @media (max-width: 393px) {
+      .wecom-window { border: 0; border-radius: 0; box-shadow: none; }
     }
   </style>
 </head>
@@ -296,9 +298,7 @@
             </button>
           </section>
           <section id="wecom-company-page" class="wecom-content" aria-labelledby="company-heading">
-            <p class="wecom-path">工作台 <svg class="icon small" aria-hidden="true"><use href="#i-chevron"/></svg> <strong>公司查询</strong></p>
             <header class="panel-heading">
-              <span class="panel-icon"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></span>
               <h1 id="company-heading">公司查询</h1>
             </header>
             <form id="company-form" class="search-panel" role="search">
