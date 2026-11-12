@@ -223,7 +223,8 @@
     .flow-page { max-width: 920px; margin: 0 auto; padding: 26px 20px 38px; }
     .flow-page > header { margin-bottom: 14px; }
     .flow-page > header p { margin-top: 6px; color: var(--sub); font-size: 13px; }
-    .flow-board { --flow-line: #8fa2ba; margin: 0; padding: 20px clamp(12px, 3vw, 25px) 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; }
+    .flow-board { --flow-line: #8fa2ba; --flow-return: #2363ae; position: relative; margin: 0; padding: 20px clamp(28px, 4vw, 40px) 14px clamp(12px, 3vw, 25px); border: 1px solid var(--line); border-radius: 13px; background: #fff; }
+    .flow-return { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--flow-return); pointer-events: none; }
     .flow-steps { display: grid; gap: 15px; margin: 0; padding: 0; list-style: none; }
     .flow-trunk { max-width: 430px; margin: 0 auto; }
     .flow-step { position: relative; display: grid; align-content: center; gap: 4px; min-height: 49px; padding: 9px 11px; border: 1px solid #dbe5f2; border-radius: 7px; background: #f8faff; line-height: 1.4; }
@@ -408,9 +409,9 @@
         <h1 id="flow-heading">数据流转图</h1>
         <p>公司用户查询、线索关联与缺失用户建档</p>
       </header>
-      <figure class="flow-board" aria-label="SF、企微、外部数据源、线索与 EC 的数据流转">
+      <figure class="flow-board" aria-label="SF、企微、外部数据源、线索、EC 与 SCRM 的数据流转">
         <ol class="flow-steps flow-trunk" aria-label="同步与查询">
-          <li class="flow-step"><span class="flow-system">SF</span><strong>拉取公司及用户数据</strong></li>
+          <li class="flow-step" id="flow-sf-pull"><span class="flow-system">SF</span><strong>拉取公司及用户数据</strong></li>
           <li class="flow-step"><span class="flow-system">企微</span><strong>同步至企微公司查询的数据源</strong></li>
           <li class="flow-step"><span class="flow-system">销售</span><strong>在企微公司查询页点击「查询」</strong></li>
         </ol>
@@ -435,11 +436,20 @@
           <section class="flow-branch missing" aria-labelledby="flow-no-users">
             <h2 id="flow-no-users">无用户</h2>
             <ol class="flow-steps">
-              <li class="flow-step"><span class="flow-system">SF</span><strong>销售在该公司下创建用户数据</strong></li>
-              <li class="flow-step flow-end"><span class="flow-system">EC</span><strong>接收从 SF 同步的新用户数据</strong></li>
+              <li class="flow-step" id="flow-sf-create"><span class="flow-system">SF</span><strong>销售在该公司下创建用户数据</strong><span class="sr-only">创建后回到从 SF 拉取公司及用户数据的步骤。</span></li>
+              <li class="flow-step"><span class="flow-system">EC</span><strong>接收从 SF 同步的新用户数据</strong></li>
+              <li class="flow-step flow-end"><span class="flow-system">SCRM</span><strong>EC 调用接口将新用户数据推送给 SCRM</strong></li>
             </ol>
           </section>
         </div>
+        <svg class="flow-return" aria-hidden="true">
+          <defs>
+            <marker id="flow-return-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M 1 1 L 7 4 L 1 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+          <path id="flow-return-arrow" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" marker-end="url(#flow-return-tip)"/>
+        </svg>
         <figcaption>Demo 使用模拟数据展示该业务流程。</figcaption>
       </figure>
     </section>
@@ -932,6 +942,22 @@
       else if (activeView === "company") renderCompany();
     });
     showViewFromHash();
+
+    if ("ResizeObserver" in window) {
+      const returnArrow = $("#flow-return-arrow");
+      const sfCreateStep = $("#flow-sf-create");
+      const sfPullStep = $("#flow-sf-pull");
+      new ResizeObserver(() => {
+        const canvas = returnArrow.ownerSVGElement.getBoundingClientRect();
+        if (!canvas.width) return;
+        const from = sfCreateStep.getBoundingClientRect();
+        const to = sfPullStep.getBoundingClientRect();
+        const fromY = from.top + from.height / 2 - canvas.top;
+        const toY = to.top + to.height / 2 - canvas.top;
+        const gutterX = canvas.width - 12;
+        returnArrow.setAttribute("d", `M ${from.right - canvas.left} ${fromY} H ${gutterX} V ${toY} H ${to.right - canvas.left + 1}`);
+      }).observe($(".flow-board"));
+    }
   </script>
 </body>
 </html>
