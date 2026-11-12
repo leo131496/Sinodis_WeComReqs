@@ -304,7 +304,7 @@
             <form id="company-form" class="search-panel" role="search">
               <label for="company-input" class="label">公司名称</label>
               <div class="search-row">
-                <div class="searchbox"><svg class="icon small" aria-hidden="true"><use href="#i-search"/></svg><input id="company-input" type="search" placeholder="输入公司全称或关键词" autocomplete="off"></div>
+                <div class="searchbox"><svg class="icon small" aria-hidden="true"><use href="#i-search"/></svg><input id="company-input" type="search" placeholder="请输入公司名称" autocomplete="off"></div>
                 <button class="button primary" id="company-submit" type="submit" disabled>查询</button>
               </div>
             </form>
@@ -562,7 +562,7 @@
         if (matchedCompanies.length) {
           renderCompanyChoices(container);
         } else {
-          container.innerHTML = '<div class="table-panel empty"><strong>未找到匹配公司</strong>请核对公司名称或换个关键词查询。</div>';
+          container.innerHTML = '<div class="table-panel empty"><strong>未找到匹配公司</strong>请核对公司名称后重新查询。</div>';
         }
         return;
       }
