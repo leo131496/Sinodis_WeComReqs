@@ -220,54 +220,98 @@
     .toast strong, .toast span { display: block; }
     .toast span { color: var(--sub); font-size: 12px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    .flow-page { max-width: 920px; margin: 0 auto; padding: 26px 20px 38px; }
-    .flow-page > header { margin-bottom: 14px; }
-    .flow-page > header p { margin-top: 6px; color: var(--sub); font-size: 13px; }
-    .flow-board { --flow-line: #8fa2ba; --flow-return: #2363ae; position: relative; margin: 0; padding: 20px clamp(28px, 4vw, 40px) 14px clamp(12px, 3vw, 25px); border: 1px solid var(--line); border-radius: 13px; background: #fff; }
-    .flow-return { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--flow-return); pointer-events: none; }
-    .flow-steps { display: grid; gap: 15px; margin: 0; padding: 0; list-style: none; }
-    .flow-trunk { max-width: 430px; margin: 0 auto; }
-    .flow-step { position: relative; display: grid; align-content: center; gap: 4px; min-height: 49px; padding: 9px 11px; border: 1px solid #dbe5f2; border-radius: 7px; background: #f8faff; line-height: 1.4; }
-    .flow-step + .flow-step::before, .flow-question::before {
+    .flow-page { max-width: 986px; margin: 0 auto; padding: 30px 22px 40px; }
+    .flow-page > header { margin-bottom: 16px; }
+    .flow-page h1 { font-size: 28px; }
+    .flow-page > header p { margin-top: 5px; color: var(--sub); font-size: 13px; }
+    .flow-board {
+      --flow-line: #8195af;
+      --flow-return: #2c6cc2;
+      position: relative;
+      margin: 0;
+      padding: 36px 36px 14px;
+      border: 1px solid #dbe4ef;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 10px 25px #203d6810;
+    }
+    .flow-connections { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--flow-line); pointer-events: none; }
+    .flow-connections .flow-return { color: var(--flow-return); }
+    .flow-steps { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+    .flow-trunk { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+    .flow-step {
+      position: relative;
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      min-height: 45px;
+      padding: 8px 12px;
+      border: 1px solid var(--branch-border, #d9e5f3);
+      border-radius: 10px;
+      background: #fff;
+      line-height: 1.45;
+    }
+    .flow-step + .flow-step::before {
       content: "";
       position: absolute;
-      top: -15px;
+      top: -14px;
       left: 50%;
       width: 1px;
-      height: 14px;
+      height: 13px;
       background: var(--flow-line);
     }
-    .flow-step + .flow-step::after, .flow-question::after {
+    .flow-step + .flow-step::after {
       content: "";
       position: absolute;
       top: -6px;
-      left: calc(50% - 2.5px);
-      width: 6px;
-      height: 6px;
+      left: calc(50% - 2px);
+      width: 5px;
+      height: 5px;
       transform: rotate(45deg);
       border-right: 1px solid var(--flow-line);
       border-bottom: 1px solid var(--flow-line);
     }
-    .flow-step strong { color: var(--ink); font-size: 13px; }
-    .flow-step small { color: var(--sub); font-size: 11px; }
-    .flow-system { color: #315f9f; font-size: 11px; font-weight: 700; }
-    .flow-trunk .flow-step { grid-template-columns: 50px minmax(0, 1fr); align-items: center; }
-    .flow-question { position: relative; width: fit-content; max-width: 100%; margin: 15px auto 0; padding: 9px 14px; border: 1px solid #e7c992; border-radius: 7px; background: #fff7e8; color: #75470d; font-size: 13px; font-weight: 700; text-align: center; }
-    .flow-branches { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; padding-top: 19px; }
-    .flow-branches::before { content: ""; position: absolute; top: 0; left: 50%; width: 1px; height: 9px; background: var(--flow-line); }
-    .flow-branches::after { content: ""; position: absolute; top: 9px; left: calc(25% - 5.5px); right: calc(25% - 5.5px); height: 10px; border: 1px solid var(--flow-line); border-bottom: 0; pointer-events: none; }
-    .flow-branch { min-width: 0; padding: 10px; border: 1px solid #dbe8ef; border-radius: 9px; background: #f5fafc; }
-    .flow-branch.missing { border-color: #ede2ce; background: #fdf9f2; }
-    .flow-branch h2 { margin-bottom: 8px; color: #126c4a; font-size: 13px; }
-    .flow-branch.missing h2 { color: #7a4c14; }
-    .flow-branch .flow-step { background: #fff; }
-    .flow-branch .flow-end { border-color: #aed3c1; background: #eaf7f0; }
-    .flow-branch.missing .flow-end { border-color: #e4d3b3; background: #fff5e4; }
-    .flow-key { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: center; margin-top: 2px; }
-    .flow-key span { min-width: 0; padding: 5px 6px; border-radius: 5px; background: #edf3fb; color: var(--sub); font-size: 11px; text-align: center; overflow-wrap: anywhere; }
-    .flow-key b { color: #315f9f; }
+    .flow-step strong { color: var(--ink); font-size: 14px; }
+    .flow-step small { color: var(--sub); font-size: 12px; }
+    .flow-system { color: var(--branch-ink, #245c9f); font-size: 11px; font-weight: 750; }
+    .flow-trunk .flow-step { min-height: 62px; padding: 9px 13px; background: #f5f9ff; }
+    .flow-question {
+      width: fit-content;
+      max-width: 100%;
+      margin: 32px auto 0;
+      padding: 8px 18px;
+      border: 1px solid #c5d4e9;
+      border-radius: 100px;
+      background: #eaf2ff;
+      color: #183e73;
+      font-size: 14px;
+      font-weight: 750;
+      text-align: center;
+    }
+    .flow-branches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 22px; padding-top: 24px; }
+    .flow-branch {
+      --branch-bg: #f4faf7;
+      --branch-border: #d4e7dd;
+      --branch-accent: #dff1e7;
+      --branch-ink: #176447;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid var(--branch-border);
+      border-radius: 14px;
+      background: var(--branch-bg);
+    }
+    .flow-branch.missing { --branch-bg: #f7f7fe; --branch-border: #dedff2; --branch-accent: #ebe9fa; --branch-ink: #52419a; }
+    .flow-branch h2 { width: fit-content; margin: 0 0 9px; padding: 3px 10px; border-radius: 100px; background: var(--branch-accent); color: var(--branch-ink); font-size: 12px; }
+    .flow-branch .flow-end { background: var(--branch-accent); }
+    .flow-key { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; margin-top: 2px; }
+    .flow-key span { min-width: 0; padding: 4px 6px; border-radius: 6px; background: var(--branch-bg); color: var(--sub); font-size: 11px; text-align: center; overflow-wrap: anywhere; }
+    .flow-key b { color: var(--branch-ink); }
     .flow-key code { display: block; color: var(--ink); font-family: ui-monospace, monospace; }
-    .flow-board figcaption { margin-top: 11px; color: var(--muted); font-size: 11px; }
+    .flow-board figcaption { margin-top: 14px; color: var(--muted); font-size: 11px; }
+    @media (min-width: 681px) {
+      .flow-trunk .flow-step + .flow-step::before { top: 50%; left: -26px; width: 25px; height: 1px; }
+      .flow-trunk .flow-step + .flow-step::after { top: calc(50% - 2px); left: -7px; transform: rotate(-45deg); }
+    }
     @media (max-width: 1090px) {
       .admin-shell { grid-template-columns: 158px minmax(0, 1fr); }
     }
@@ -283,9 +327,13 @@
       .table-panel .section-top { flex-wrap: wrap; }
       .relation-tools { width: 100%; }
       .relation-tools .searchbox { max-width: none; }
-      .flow-page { padding: 18px 12px 24px; }
-      .flow-branches { grid-template-columns: minmax(0, 1fr); gap: 10px; padding-top: 12px; }
-      .flow-branches::before, .flow-branches::after { display: none; }
+      .flow-page { padding: 20px 12px 24px; }
+      .flow-page h1 { font-size: 24px; }
+      .flow-board { padding: 28px 23px 13px; border-radius: 14px; }
+      .flow-trunk, .flow-branches { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+      .flow-trunk .flow-step { min-height: 49px; }
+      .flow-question { margin-top: 20px; }
+      .flow-branches { padding-top: 21px; }
     }
     @media (max-width: 425px) {
       .demo-bar { grid-template-columns: minmax(0, 1fr) auto; padding-inline: 8px; gap: 5px; }
@@ -412,15 +460,15 @@
       <figure class="flow-board" aria-label="SF、企微、外部数据源、线索、EC 与 SCRM 的数据流转">
         <ol class="flow-steps flow-trunk" aria-label="同步与查询">
           <li class="flow-step" id="flow-sf-pull"><span class="flow-system">SF</span><strong>拉取公司及用户数据</strong></li>
-          <li class="flow-step"><span class="flow-system">企微</span><strong>同步至企微公司查询的数据源</strong></li>
-          <li class="flow-step"><span class="flow-system">销售</span><strong>在企微公司查询页点击「查询」</strong></li>
+          <li class="flow-step"><span class="flow-system">企微</span><strong>同步至「公司查询」数据源</strong></li>
+          <li class="flow-step" id="flow-query"><span class="flow-system">销售</span><strong>输入公司名称并点击「查询」</strong></li>
         </ol>
-        <p class="flow-question">该公司下有用户数据吗？</p>
+        <p class="flow-question" id="flow-question">该公司下有用户吗？</p>
         <div class="flow-branches">
           <section class="flow-branch" aria-labelledby="flow-has-users">
             <h2 id="flow-has-users">有用户</h2>
             <ol class="flow-steps">
-              <li class="flow-step"><strong>选择用户，点击「关联关系」</strong><small>销售在企微查询结果中操作</small></li>
+              <li class="flow-step"><strong>选择用户并点击「关联关系」</strong></li>
               <li class="flow-step"><strong>同步用户数据至「对应关系」</strong><small>营销后台 → 市场线索 → 外部数据源 → 对应关系</small></li>
               <li class="flow-step">
                 <strong>按 customerid 匹配线索</strong>
@@ -436,19 +484,26 @@
           <section class="flow-branch missing" aria-labelledby="flow-no-users">
             <h2 id="flow-no-users">无用户</h2>
             <ol class="flow-steps">
-              <li class="flow-step" id="flow-sf-create"><span class="flow-system">SF</span><strong>销售在该公司下创建用户数据</strong><span class="sr-only">创建后回到从 SF 拉取公司及用户数据的步骤。</span></li>
+              <li class="flow-step" id="flow-sf-create"><span class="flow-system">SF</span><strong>销售在该公司下创建用户</strong><span class="sr-only">创建后回到从 SF 拉取公司及用户数据的步骤。</span></li>
               <li class="flow-step"><span class="flow-system">EC</span><strong>接收从 SF 同步的新用户数据</strong></li>
               <li class="flow-step flow-end"><span class="flow-system">SCRM</span><strong>EC 调用接口将新用户数据推送给 SCRM</strong></li>
             </ol>
           </section>
         </div>
-        <svg class="flow-return" aria-hidden="true">
+        <svg class="flow-connections" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
           <defs>
-            <marker id="flow-return-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-              <path d="M 1 1 L 7 4 L 1 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="flow-tip-shape" d="M 1 1 L 7 4 L 1 7"/>
+            <marker id="flow-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+              <use href="#flow-tip-shape"/>
+            </marker>
+            <marker class="flow-return" id="flow-return-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+              <use href="#flow-tip-shape"/>
             </marker>
           </defs>
-          <path id="flow-return-arrow" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" marker-end="url(#flow-return-tip)"/>
+          <path id="flow-query-arrow" marker-end="url(#flow-tip)"/>
+          <path id="flow-has-users-arrow" marker-end="url(#flow-tip)"/>
+          <path id="flow-no-users-arrow" marker-end="url(#flow-tip)"/>
+          <path class="flow-return" id="flow-return-arrow" stroke-width="1.8" marker-end="url(#flow-return-tip)"/>
         </svg>
         <figcaption>Demo 使用模拟数据展示该业务流程。</figcaption>
       </figure>
@@ -944,19 +999,41 @@
     showViewFromHash();
 
     if ("ResizeObserver" in window) {
+      const board = $(".flow-board");
+      const connections = $(".flow-connections");
+      const branches = $(".flow-branches");
       const returnArrow = $("#flow-return-arrow");
+      const queryArrow = $("#flow-query-arrow");
+      const branchArrows = [$("#flow-has-users-arrow"), $("#flow-no-users-arrow")];
       const sfCreateStep = $("#flow-sf-create");
       const sfPullStep = $("#flow-sf-pull");
+      const queryStep = $("#flow-query");
+      const questionStep = $("#flow-question");
       new ResizeObserver(() => {
-        const canvas = returnArrow.ownerSVGElement.getBoundingClientRect();
+        const canvas = connections.getBoundingClientRect();
         if (!canvas.width) return;
-        const from = sfCreateStep.getBoundingClientRect();
-        const to = sfPullStep.getBoundingClientRect();
-        const fromY = from.top + from.height / 2 - canvas.top;
-        const toY = to.top + to.height / 2 - canvas.top;
-        const gutterX = canvas.width - 12;
-        returnArrow.setAttribute("d", `M ${from.right - canvas.left} ${fromY} H ${gutterX} V ${toY} H ${to.right - canvas.left + 1}`);
-      }).observe($(".flow-board"));
+        const bounds = (element) => {
+          const rect = element.getBoundingClientRect();
+          const left = rect.left - canvas.left;
+          const top = rect.top - canvas.top;
+          return { left, top, right: left + rect.width, bottom: top + rect.height, x: left + rect.width / 2, y: top + rect.height / 2 };
+        };
+        const pull = bounds(sfPullStep);
+        const create = bounds(sfCreateStep);
+        const query = bounds(queryStep);
+        const question = bounds(questionStep);
+        const queryBend = (query.bottom + question.top) / 2;
+        const branchBend = question.bottom + 10;
+        const stacked = window.matchMedia("(max-width: 680px)").matches;
+
+        returnArrow.setAttribute("d", `M ${create.right} ${create.y} H ${canvas.width - 11} V 11 H ${pull.x} V ${pull.top - 1}`);
+        queryArrow.setAttribute("d", `M ${query.x} ${query.bottom} V ${queryBend} H ${question.x} V ${question.top - 1}`);
+        branchArrows.forEach((arrow, index) => {
+          const branch = bounds(branches.children[index]);
+          const entry = stacked ? `H 11 V ${branch.top + 24} H ${branch.left - 1}` : `H ${branch.x} V ${branch.top - 1}`;
+          arrow.setAttribute("d", `M ${question.x} ${question.bottom} V ${branchBend} ${entry}`);
+        });
+      }).observe(board);
     }
   </script>
 </body>
