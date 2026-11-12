@@ -220,51 +220,53 @@
     .toast strong, .toast span { display: block; }
     .toast span { color: var(--sub); font-size: 12px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    .flow-page { max-width: 986px; margin: 0 auto; padding: 30px 22px 40px; }
-    .flow-page > header { margin-bottom: 16px; }
-    .flow-page h1 { font-size: 28px; }
+    .flow-page { max-width: 936px; margin: 0 auto; padding: 28px 24px 38px; }
+    .flow-page > header { margin-bottom: 17px; }
+    .flow-page h1 { font-size: 29px; }
     .flow-page > header p { margin-top: 5px; color: var(--sub); font-size: 13px; }
     .flow-board {
-      --flow-line: #8195af;
-      --flow-return: #2c6cc2;
+      --flow-line: #8798ad;
+      --flow-return: #5377a7;
+      --flow-gap: 14px;
       position: relative;
       margin: 0;
-      padding: 36px 36px 14px;
-      border: 1px solid #dbe4ef;
-      border-radius: 18px;
-      background: #fff;
-      box-shadow: 0 10px 25px #203d6810;
+      padding: 24px 38px 15px;
+      border: 1px solid #dce5ef;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #f9fbfe, #fff 290px);
+      box-shadow: 0 12px 36px #263b5e0d;
     }
     .flow-connections { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--flow-line); pointer-events: none; }
     .flow-connections .flow-return { color: var(--flow-return); }
-    .flow-steps { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
-    .flow-trunk { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+    #flow-return-arrow { stroke-dasharray: 5 4; }
+    .flow-steps { display: grid; gap: var(--flow-gap); margin: 0; padding: 0; list-style: none; }
+    .flow-trunk { width: min(100%, 310px); margin-inline: auto; }
     .flow-step {
       position: relative;
       display: grid;
       align-content: center;
-      gap: 3px;
-      min-height: 45px;
-      padding: 8px 12px;
-      border: 1px solid var(--branch-border, #d9e5f3);
-      border-radius: 10px;
+      gap: 4px;
+      min-height: 46px;
+      padding: 9px 13px;
+      border: 1px solid #dbe4ef;
+      border-radius: 9px;
       background: #fff;
-      line-height: 1.45;
+      line-height: 1.42;
     }
-    .flow-step + .flow-step::before {
+    .flow-step + .flow-step::before, .flow-branch .flow-step:first-child::before {
       content: "";
       position: absolute;
-      top: -14px;
-      left: 50%;
+      top: calc(0px - var(--flow-gap));
+      left: calc(50% - .5px);
       width: 1px;
-      height: 13px;
+      height: calc(var(--flow-gap) - 1px);
       background: var(--flow-line);
     }
-    .flow-step + .flow-step::after {
+    .flow-step + .flow-step::after, .flow-branch .flow-step:first-child::after {
       content: "";
       position: absolute;
       top: -6px;
-      left: calc(50% - 2px);
+      left: calc(50% - 2.5px);
       width: 5px;
       height: 5px;
       transform: rotate(45deg);
@@ -272,55 +274,74 @@
       border-bottom: 1px solid var(--flow-line);
     }
     .flow-step strong { color: var(--ink); font-size: 14px; }
-    .flow-step small { color: var(--sub); font-size: 12px; }
-    .flow-system { color: var(--branch-ink, #245c9f); font-size: 11px; font-weight: 750; }
-    .flow-trunk .flow-step { min-height: 62px; padding: 9px 13px; background: #f5f9ff; }
+    .flow-step small { color: var(--sub); font-size: 11px; }
+    .flow-system {
+      display: inline-grid;
+      place-items: center;
+      min-height: 24px;
+      padding: 2px 4px;
+      border-radius: 6px;
+      background: var(--branch-accent, #eaf1fb);
+      color: var(--branch-ink, #315d91);
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .flow-trunk .flow-step, .flow-branch.missing .flow-step { grid-template-columns: 43px minmax(0, 1fr); align-items: center; column-gap: 10px; }
     .flow-question {
       position: relative;
       display: grid;
       place-items: center;
       width: min(100%, 222px);
-      min-height: 72px;
-      margin: 32px auto 0;
-      background: #a9c1e2;
+      min-height: 76px;
+      margin: 15px auto 0;
+      background: #86a2c8;
       clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-      color: #183e73;
-      font-size: 14px;
+      color: #20466f;
+      font-size: 15px;
       font-weight: 750;
       text-align: center;
     }
     .flow-question::before {
       content: "";
       position: absolute;
-      inset: 1px 3px;
-      background: #eaf2ff;
+      inset: 1.5px 4px;
+      background: #eaf2fd;
       clip-path: inherit;
     }
     .flow-question span { position: relative; }
-    .flow-branches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 22px; padding-top: 24px; }
+    .flow-branches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 34px; padding-top: 28px; }
     .flow-branch {
-      --branch-bg: #f4faf7;
-      --branch-border: #d4e7dd;
-      --branch-accent: #dff1e7;
-      --branch-ink: #176447;
+      --branch-accent: #e8f4f0;
+      --branch-border: #c8e2d8;
+      --branch-ink: #1a6550;
       min-width: 0;
-      padding: 12px;
-      border: 1px solid var(--branch-border);
-      border-radius: 14px;
-      background: var(--branch-bg);
     }
-    .flow-branch.missing { --branch-bg: #f7f7fe; --branch-border: #dedff2; --branch-accent: #ebe9fa; --branch-ink: #52419a; }
-    .flow-branch h2 { width: fit-content; margin: 0 0 9px; padding: 3px 10px; border-radius: 100px; background: var(--branch-accent); color: var(--branch-ink); font-size: 12px; }
-    .flow-branch .flow-end { background: var(--branch-accent); }
-    .flow-key { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: center; margin-top: 2px; }
-    .flow-key span { min-width: 0; padding: 4px 6px; border-radius: 6px; background: var(--branch-bg); color: var(--sub); font-size: 11px; text-align: center; overflow-wrap: anywhere; }
+    .flow-branch.missing { --branch-accent: #edf0fa; --branch-border: #d7dff3; --branch-ink: #405987; }
+    .flow-branch h2 {
+      width: fit-content;
+      margin: 0 auto var(--flow-gap);
+      padding: 4px 14px;
+      border-radius: 20px;
+      background: var(--branch-accent);
+      color: var(--branch-ink);
+      font-size: 12px;
+    }
+    .flow-branch .flow-end { border-color: var(--branch-border); background: var(--branch-accent); }
+    .flow-branch .flow-end strong { color: var(--branch-ink); }
+    .flow-key {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: #f3f7f9;
+      text-align: center;
+    }
+    .flow-key span { color: var(--sub); font-size: 11px; overflow-wrap: anywhere; }
     .flow-key b { color: var(--branch-ink); }
-    .flow-key code { display: block; color: var(--ink); font-family: ui-monospace, monospace; }
-    .flow-board figcaption { margin-top: 14px; color: var(--muted); font-size: 11px; }
-    @media (min-width: 681px) {
-      .flow-trunk .flow-step + .flow-step::before { top: 50%; left: -26px; width: 25px; height: 1px; }
-      .flow-trunk .flow-step + .flow-step::after { top: calc(50% - 2px); left: -7px; transform: rotate(-45deg); }
-    }
+    .flow-key code { margin-left: 3px; color: #234965; font-family: ui-monospace, monospace; }
+    .flow-board figcaption { margin-top: 17px; color: var(--muted); font-size: 11px; }
     @media (max-width: 1090px) {
       .admin-shell { grid-template-columns: 158px minmax(0, 1fr); }
     }
@@ -338,11 +359,9 @@
       .relation-tools .searchbox { max-width: none; }
       .flow-page { padding: 20px 12px 24px; }
       .flow-page h1 { font-size: 24px; }
-      .flow-board { padding: 28px 23px 13px; border-radius: 14px; }
-      .flow-trunk, .flow-branches { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-      .flow-trunk .flow-step { min-height: 49px; }
-      .flow-question { margin-top: 20px; }
-      .flow-branches { padding-top: 21px; }
+      .flow-board { padding: 19px 25px 13px; border-radius: 14px; }
+      .flow-branches { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-top: 24px; }
+      .flow-key code { display: block; margin-left: 0; }
     }
     @media (max-width: 425px) {
       .demo-bar { grid-template-columns: minmax(0, 1fr) auto; padding-inline: 8px; gap: 5px; }
@@ -464,7 +483,7 @@
     <section id="flow-view" class="flow-page" aria-labelledby="flow-heading" hidden>
       <header>
         <h1 id="flow-heading">数据流转图</h1>
-        <p>公司用户查询、线索关联与缺失用户建档</p>
+        <p>公司用户查询、线索关联与 SF 建档</p>
       </header>
       <figure class="flow-board" aria-label="SF、企微、外部数据源、线索、EC 与 SCRM 的数据流转">
         <ol class="flow-steps flow-trunk" aria-label="同步与查询">
@@ -512,7 +531,7 @@
           <path id="flow-query-arrow" marker-end="url(#flow-tip)"/>
           <path id="flow-has-users-arrow" marker-end="url(#flow-tip)"/>
           <path id="flow-no-users-arrow" marker-end="url(#flow-tip)"/>
-          <path class="flow-return" id="flow-return-arrow" stroke-width="1.8" marker-end="url(#flow-return-tip)"/>
+          <path class="flow-return" id="flow-return-arrow" stroke-width="1.5" marker-end="url(#flow-return-tip)"/>
         </svg>
         <figcaption>Demo 使用模拟数据展示该业务流程。</figcaption>
       </figure>
@@ -1010,10 +1029,12 @@
     if ("ResizeObserver" in window) {
       const board = $(".flow-board");
       const connections = $(".flow-connections");
-      const branches = $(".flow-branches");
       const returnArrow = $("#flow-return-arrow");
       const queryArrow = $("#flow-query-arrow");
-      const branchArrows = [$("#flow-has-users-arrow"), $("#flow-no-users-arrow")];
+      const branchConnections = [
+        { label: $("#flow-has-users"), arrow: $("#flow-has-users-arrow") },
+        { label: $("#flow-no-users"), arrow: $("#flow-no-users-arrow") }
+      ];
       const sfCreateStep = $("#flow-sf-create");
       const sfPullStep = $("#flow-sf-pull");
       const queryStep = $("#flow-query");
@@ -1031,15 +1052,24 @@
         const create = bounds(sfCreateStep);
         const query = bounds(queryStep);
         const question = bounds(questionStep);
-        const queryBend = (query.bottom + question.top) / 2;
-        const branchBend = question.bottom + 10;
+        const branchBend = question.bottom + 11;
         const stacked = window.matchMedia("(max-width: 680px)").matches;
+        const gutter = canvas.width - 13;
+        const radius = 7;
 
-        returnArrow.setAttribute("d", `M ${create.right} ${create.y} H ${canvas.width - 11} V 11 H ${pull.x} V ${pull.top - 1}`);
-        queryArrow.setAttribute("d", `M ${query.x} ${query.bottom} V ${queryBend} H ${question.x} V ${question.top - 1}`);
-        branchArrows.forEach((arrow, index) => {
-          const branch = bounds(branches.children[index]);
-          const entry = stacked ? `H 11 V ${branch.top + 24} H ${branch.left - 1}` : `H ${branch.x} V ${branch.top - 1}`;
+        returnArrow.setAttribute("d", [
+          `M ${create.right} ${create.y} H ${gutter - radius}`,
+          `Q ${gutter} ${create.y} ${gutter} ${create.y - radius}`,
+          `V ${pull.y + radius} Q ${gutter} ${pull.y} ${gutter - radius} ${pull.y}`,
+          `H ${pull.right + 1}`
+        ].join(" "));
+        queryArrow.setAttribute("d", `M ${question.x} ${query.bottom} V ${question.top - 1}`);
+        branchConnections.forEach(({ label, arrow }, index) => {
+          const branch = bounds(label);
+          const direction = index === 0 ? -1 : 1;
+          const entry = stacked
+            ? `H 17 Q 10 ${branchBend} 10 ${branchBend + radius} V ${branch.y - radius} Q 10 ${branch.y} 17 ${branch.y} H ${branch.left - 1}`
+            : `H ${branch.x - direction * radius} Q ${branch.x} ${branchBend} ${branch.x} ${branchBend + radius} V ${branch.top - 1}`;
           arrow.setAttribute("d", `M ${question.x} ${question.bottom} V ${branchBend} ${entry}`);
         });
       }).observe(board);
