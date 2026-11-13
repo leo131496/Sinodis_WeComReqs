@@ -226,7 +226,6 @@
     .flow-page > header p { margin-top: 5px; color: var(--sub); font-size: 13px; }
     .flow-board {
       --flow-line: #8798ad;
-      --flow-return: #5377a7;
       --flow-gap: 14px;
       position: relative;
       margin: 0;
@@ -237,8 +236,6 @@
       box-shadow: 0 12px 36px #263b5e0d;
     }
     .flow-connections { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--flow-line); pointer-events: none; }
-    .flow-connections .flow-return { color: var(--flow-return); }
-    #flow-return-arrow { stroke-dasharray: 5 4; }
     .flow-steps { display: grid; gap: var(--flow-gap); margin: 0; padding: 0; list-style: none; }
     .flow-trunk { width: min(100%, 310px); margin-inline: auto; }
     .flow-step {
@@ -517,14 +514,14 @@
           <section class="flow-branch missing" aria-labelledby="flow-no-users">
             <h2 id="flow-no-users">无用户</h2>
             <ol class="flow-steps">
-              <li class="flow-step" id="flow-sf-create"><span class="flow-system">SF</span><strong>销售在 SF 中为该公司创建用户</strong><span class="sr-only">创建后重新拉取公司及线索中关联的公司数据。</span></li>
+              <li class="flow-step" id="flow-sf-create"><span class="flow-system">SF</span><strong>销售在 SF 中为该公司创建用户</strong></li>
             </ol>
-            <div class="flow-parallel" role="group" aria-label="创建用户后并行同步至 EC 和 SCRM 对应关系">
+            <div class="flow-parallel" role="group" aria-label="EC 与 SCRM 对应关系的并行同步流程">
               <ol class="flow-steps" aria-label="同步至 EC 后推送给 SCRM">
                 <li class="flow-step" id="flow-ec-sync"><span class="flow-system">EC</span><strong>SF 将新用户数据同步给 EC</strong></li>
                 <li class="flow-step flow-end"><span class="flow-system">SCRM</span><strong>EC 调用接口将新用户数据推送给 SCRM</strong></li>
               </ol>
-              <ol class="flow-steps" aria-label="SCRM 同步对应关系">
+              <ol class="flow-steps" aria-label="SCRM 同步对应关系，连接箭头由 SCRM 指向 SF">
                 <li class="flow-step flow-end" id="flow-scrm-sync"><span class="flow-system">SCRM</span><strong>将 SF 数据同步至「对应关系」对象</strong></li>
               </ol>
             </div>
@@ -533,10 +530,7 @@
         <svg class="flow-connections" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
           <defs>
             <path id="flow-tip-shape" d="M 1 1 L 7 4 L 1 7"/>
-            <marker id="flow-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-              <use href="#flow-tip-shape"/>
-            </marker>
-            <marker class="flow-return" id="flow-return-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+            <marker id="flow-tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
               <use href="#flow-tip-shape"/>
             </marker>
           </defs>
@@ -544,8 +538,7 @@
           <path id="flow-has-users-arrow" marker-end="url(#flow-tip)"/>
           <path id="flow-no-users-arrow" marker-end="url(#flow-tip)"/>
           <path id="flow-ec-sync-arrow" marker-end="url(#flow-tip)"/>
-          <path id="flow-scrm-sync-arrow" marker-end="url(#flow-tip)"/>
-          <path class="flow-return" id="flow-return-arrow" stroke-width="1.5" marker-end="url(#flow-return-tip)"/>
+          <path id="flow-scrm-sync-arrow" marker-start="url(#flow-tip)"/>
         </svg>
         <figcaption>Demo 使用模拟数据展示该业务流程。</figcaption>
       </figure>
@@ -1043,14 +1036,12 @@
     if ("ResizeObserver" in window) {
       const board = $(".flow-board");
       const connections = $(".flow-connections");
-      const returnArrow = $("#flow-return-arrow");
       const queryArrow = $("#flow-query-arrow");
       const branchConnections = [
         { label: $("#flow-has-users"), arrow: $("#flow-has-users-arrow") },
         { label: $("#flow-no-users"), arrow: $("#flow-no-users-arrow") }
       ];
       const sfCreateStep = $("#flow-sf-create");
-      const companyPullStep = $("#flow-company-pull");
       const syncConnections = [
         { step: $("#flow-ec-sync"), arrow: $("#flow-ec-sync-arrow") },
         { step: $("#flow-scrm-sync"), arrow: $("#flow-scrm-sync-arrow") }
@@ -1066,27 +1057,20 @@
           const top = rect.top - canvas.top;
           return { left, top, right: left + rect.width, bottom: top + rect.height, x: left + rect.width / 2, y: top + rect.height / 2 };
         };
-        const pull = bounds(companyPullStep);
         const create = bounds(sfCreateStep);
         const query = bounds(queryStep);
         const question = bounds(questionStep);
         const branchBend = question.bottom + 11;
         const stacked = window.matchMedia("(max-width: 680px)").matches;
-        const gutter = canvas.width - 13;
         const radius = 7;
 
-        returnArrow.setAttribute("d", [
-          `M ${create.right} ${create.y} H ${gutter - radius}`,
-          `Q ${gutter} ${create.y} ${gutter} ${create.y - radius}`,
-          `V ${pull.y + radius} Q ${gutter} ${pull.y} ${gutter - radius} ${pull.y}`,
-          `H ${pull.right + 1}`
-        ].join(" "));
         queryArrow.setAttribute("d", `M ${question.x} ${query.bottom} V ${question.top - 1}`);
         syncConnections.forEach(({ step, arrow }, index) => {
           const target = bounds(step);
           const bend = create.bottom + 14;
           const direction = index === 0 ? -1 : 1;
-          arrow.setAttribute("d", `M ${create.x} ${create.bottom} V ${bend} H ${target.x - direction * radius} Q ${target.x} ${bend} ${target.x} ${bend + radius} V ${target.top - 1}`);
+          const anchor = create.x + direction * 14;
+          arrow.setAttribute("d", `M ${anchor} ${create.bottom} V ${bend} H ${target.x - direction * radius} Q ${target.x} ${bend} ${target.x} ${bend + radius} V ${target.top - 1}`);
         });
         branchConnections.forEach(({ label, arrow }, index) => {
           const branch = bounds(label);
