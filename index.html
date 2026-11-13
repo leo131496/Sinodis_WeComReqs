@@ -487,9 +487,9 @@
       </header>
       <figure class="flow-board" aria-label="SF、企微、外部数据源、线索、EC 与 SCRM 的数据流转">
         <ol class="flow-steps flow-trunk" aria-label="同步与查询">
-          <li class="flow-step" id="flow-sf-pull"><span class="flow-system">SF</span><strong>拉取公司及用户数据</strong></li>
-          <li class="flow-step"><span class="flow-system">企微</span><strong>同步至「公司查询」数据源</strong></li>
-          <li class="flow-step" id="flow-query"><span class="flow-system">销售</span><strong>输入公司名称并点击「查询」</strong></li>
+          <li class="flow-step" id="flow-sf-pull"><span class="flow-system">SF</span><strong>拉取公司及线索中关联的公司数据</strong></li>
+          <li class="flow-step"><span class="flow-system">企微</span><strong>最新数据信息同步至企微「公司查询」</strong></li>
+          <li class="flow-step" id="flow-query"><span class="flow-system">销售</span><strong>在「公司查询」录入公司名称并点击「查询」</strong></li>
         </ol>
         <p class="flow-question" id="flow-question"><span>公司下是否有用户</span></p>
         <div class="flow-branches">
@@ -512,8 +512,9 @@
           <section class="flow-branch missing" aria-labelledby="flow-no-users">
             <h2 id="flow-no-users">无用户</h2>
             <ol class="flow-steps">
-              <li class="flow-step" id="flow-sf-create"><span class="flow-system">SF</span><strong>销售在该公司下创建用户</strong><span class="sr-only">创建后回到从 SF 拉取公司及用户数据的步骤。</span></li>
-              <li class="flow-step"><span class="flow-system">EC</span><strong>接收从 SF 同步的新用户数据</strong></li>
+              <li class="flow-step" id="flow-sf-create"><span class="flow-system">SF</span><strong>销售在 SF 中为该公司创建用户</strong><span class="sr-only">创建后回到从 SF 拉取公司及线索中关联的公司数据的步骤。</span></li>
+              <li class="flow-step"><span class="flow-system">EC</span><strong>SF 将新用户数据同步给 EC</strong></li>
+              <li class="flow-step"><span class="flow-system">SCRM</span><strong>将 SF 数据同步至「对应关系」对象</strong></li>
               <li class="flow-step flow-end"><span class="flow-system">SCRM</span><strong>EC 调用接口将新用户数据推送给 SCRM</strong></li>
             </ol>
           </section>
